@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Flask-PyMongo App</title>
+    <link rel="stylesheet" type="text/css"
+          href="{{ url_for('static', filename='css/styles.css', _external=True, _scheme='https') }}">
+
+</head>
+
+<body>
+
+    <script type="text/javascript"
+        src="{{ url_for('static', filename='js/jquery.min.js', _external=True, _scheme='https') }}"></script>
+
+    <h1>Congratulations! Flask-PyMongo Has Been Successfully Deployed On Code Capsules.</h1>
+
+    <h2>Please enter your details below.</h2>
+    <div class="container">
+        <form>
+            <div class="signup"><p>Sign Up</p></div>
+            <input type="text" name="name" placeholder="Enter Name..." />
+            <br/><br/>
+            <input type="text" name="surname" placeholder="Enter Surname..." />
+            <br/><br/>
+            <button id="btnSignUp">Submit</button>
+            <p id="feedback"></p>
+        </form>
+
+        <br/><br/>
+        <button id="view">View Message</button>
+
+        <br/><br/>
+        <p id="personalmessage"></p>
+    </div>
+
+    <script type="text/javascript">
+        var pid;
+        $(function() {
+    $('#btnSignUp').click(function() {
+        event.preventDefault();
+        $.ajax({
+            url: '/signUp',
+            data: $('form').serialize(),
+            type: 'POST',
+            success: function(response) {
+                console.log(response);
+                console.log(response.pid);
+                pid = response.pid;
+                $("#feedback").append("Data submitted successfully!")
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    });
+    });
+
+    $(function() {
+        $('#view').click(function() {
+            console.log("The pid is", pid);
+            $.ajax({
+            url: '/view',
+            data: JSON.stringify({ "pid": pid }),
+            contentType: "application/json; charset=utf-8",
+            type: 'POST',
+            success: function(response) {
+                console.log(response);
+                var fullname = response.name + " " + response.surname;
+                $("#personalmessage").append(` <b>Thank you ${fullname} for registering. Feel free to extend the application to add more functionality.</b>. `);
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+        });
+    });
+    </script>
+</body>
+</html>
