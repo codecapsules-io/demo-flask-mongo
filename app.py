@@ -4,9 +4,9 @@ from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 import os
 
-app = Flask(__name__)
-app.config["MONGO_URI"] = os.environ.get("DATABASE_URL") + "/app?authSource=admin"
-mongodb_client = PyMongo(app)
+application = Flask(__name__)
+application.config["MONGO_URI"] = os.environ.get("DATABASE_URL") + "/app?authSource=admin"
+mongodb_client = PyMongo(application)
 db = mongodb_client.db
 
 @app.route("/")
@@ -37,5 +37,4 @@ def view():
     return jsonify({'name': p1["name"], 'surname': p1["surname"]})
 
 if __name__ == "__main__":
-    application = app
     application.run()
