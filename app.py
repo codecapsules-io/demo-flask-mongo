@@ -37,4 +37,5 @@ def view():
     return jsonify({'name': p1["name"], 'surname': p1["surname"]})
 
 if __name__ == "__main__":
-    app.run()
+    application = app
+    application.run()
