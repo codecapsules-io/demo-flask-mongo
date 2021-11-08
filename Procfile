@@ -1,1 +1,1 @@
-web: python3 -m app --host=0.0.0.0 --port=$PORT
+web: gunicorn  -b 127.0.0.1:$PORT module:app
