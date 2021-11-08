@@ -9,11 +9,11 @@ application.config["MONGO_URI"] = os.environ.get("DATABASE_URL") + "/app?authSou
 mongodb_client = PyMongo(application)
 db = mongodb_client.db
 
-@app.route("/")
+@application.route("/")
 def main():
     return render_template('index.html')
 
-@app.route('/signUp',methods=['POST'])
+@application.route('/signUp',methods=['POST'])
 def signUp():
 
     # read the posted values from the UI
@@ -26,7 +26,7 @@ def signUp():
 
     return jsonify({"pid": str(id.inserted_id)})
 
-@app.route('/view',methods=['POST'])
+@application.route('/view',methods=['POST'])
 def view():
     pid = request.json['pid']
     print("The view pid: ", pid)
